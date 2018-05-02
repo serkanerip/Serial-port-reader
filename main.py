@@ -34,7 +34,7 @@ while(not stop):
     if not connected:
         if len(gc.allData) > 0:
             e_h = raw_input("[HATA] Port kapandi son verileri kaydetmek istiyor musunuz ?[e/h]: ")
-            if e_h:
+            if e_h == "e":
                 saveData(gc.allData)
         exit(0)
     print "\n\nGSR -----------------KONTROL PROGRAMI------------------------------"
