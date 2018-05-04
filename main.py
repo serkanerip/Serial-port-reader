@@ -41,6 +41,7 @@ while(not stop):
     print "[0]: Olcumu baslatmak icin!"
     print "[1]: Olcum verilerini kaydetmek!"
     print "[2]: Kayitli olcum verilerini grafikte gormek!"
+    print "[3]: 2 Saniye arasindaki ortalama degeri goster!"
     print "[99]: Cikis!\n\n"
     stdinput = (raw_input("Secenek: "))
     if stdinput == "99":
@@ -59,3 +60,23 @@ while(not stop):
             print "[Hata] Dosya bulunamadi!"
         else:
             readAndVisualize(_fileN)
+    elif stdinput == "3":
+        _fileN = raw_input("[*] Dosyanin adini giriniz: ")
+        data = json.load(open(_fileN))
+        _stopLoop = False
+        while (not _stopLoop):
+            _aralik = raw_input(" Araligi giriniz (sayi-sayi cinsinden): \n")
+            if _aralik.isdigit():
+                if int(_aralik) == 99:
+                    _stopLoop = True
+                    break
+            n1 = float(_aralik[:_aralik.find("-")])
+            n2 = float(_aralik[_aralik.find("-")+1:len(_aralik)])
+            _sum = 0
+            _number = 0
+            for row in data:
+                if float(row["time"]) >= n1 and n2 >= float(row["time"]):
+                    _sum += row["volt"]
+                    _number += 1
+            print "Ortalama: " + str((_sum/_number))
+
