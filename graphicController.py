@@ -17,7 +17,7 @@ class GraphicController:
         self.read = True
         self.closeReadThread = False
         self.readThread = threading.Thread(target=self.ReadData)
-        
+
 
     def Start(self):
         self.animation = anim.FuncAnimation(self.fig, self.Update, interval=50,blit=False)
@@ -32,6 +32,7 @@ class GraphicController:
             self.ax.clear()
             self.ax.grid(b=True, which="major", color="black", linestyle="-")
             self.ax.plot(self.x, self.y)
+            self.pause = True
 
     def Refresh(self, x, y):
         self.fig, self.ax = plt.subplots()
@@ -53,6 +54,7 @@ class GraphicController:
                     self.allData.append(obj)
                     self.x.append(obj['time'])
                     self.y.append(obj['volt'])
+                    self.pause = False
                 else:
                     self.closeReadThread = True
 

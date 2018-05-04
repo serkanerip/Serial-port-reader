@@ -15,8 +15,11 @@ class SerialController:
     def ReadData(self):
         unPackedData = ""
         try:
-            while(unPackedData.find(',') == -1):
-                unPackedData = self.serial.readline()
+            unPackedData = self.serial.readline()
+            if unPackedData.find(',') == -1:
+                self.anyError = True
+                self.error = "[Hata]: Bozuk veri!"
+                return {}
             volt, time = unPackedData.split(',')
             volt = float(volt)
             time = float(time)
