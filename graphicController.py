@@ -31,7 +31,14 @@ class GraphicController:
         if not self.pause:
             self.ax.clear()
             self.ax.grid(b=True, which="major", color="black", linestyle="-")
-            self.ax.plot(self.x, self.y)
+            if (len(self.x) > len(self.y)):
+                print "x daha buyuk"
+            elif len(self.y) > len(self.x):
+                print "y daha buyuk"
+            try:
+                self.ax.plot(self.x, self.y)
+            except:
+                print "error"
             self.pause = True
 
     def Refresh(self, x, y):
