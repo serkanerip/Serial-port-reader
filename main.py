@@ -20,9 +20,7 @@ connected = False
 def Refresh():
     XDATA = []
     YDATA = []
-    gc.Refresh(XDATA, YDATA)
-    sc.Close()
-    sc.serial.open()
+    gc.Init(XDATA, YDATA)
 
 PORT = setSerialPort()
 sc = SerialController(PORT)
@@ -47,10 +45,7 @@ while(not stop):
     if stdinput == "99":
         stop = True
     elif stdinput == "0":
-        if not ft:
-            Refresh()
-        else:
-            ft = False
+        Refresh()
         gc.Start()
     elif stdinput == "1":
         saveData(gc.allData)

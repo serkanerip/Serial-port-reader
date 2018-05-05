@@ -3,26 +3,34 @@ import matplotlib.animation as anim
 import threading
 
 class GraphicController:
-    def __init__(self, xData, yData, sc, xLabel="Time", yLabel="Conductivity"):
-        self.fig, self.ax = plt.subplots()
+    def __init__(self, xData, yData, sc, xLabel="Time", yLabel="Resistance"):
+        self.sc = sc
+        self.Init(xData, yData)
         self.xLabel = xLabel
         self.yLabel = yLabel
         plt.xlabel(xLabel)
         plt.ylabel(yLabel)
-        self.x = xData
-        self.y = yData
-        self.sc = sc
+
+    def Init(self, x, y):
+        plt.close("all")
+        self.fig, self.ax = plt.subplots()
+        self.x = x
+        self.y = y
         self.allData = []
         self.pause = False
         self.read = True
         self.closeReadThread = False
         self.readThread = threading.Thread(target=self.ReadData)
+        if self.sc.CheckPort:
+            self.sc.Close()
+            self.sc.Open()
 
 
     def Start(self):
         self.animation = anim.FuncAnimation(self.fig, self.Update, interval=50,blit=False)
         self.readThread.start()
         plt.show()
+        plt.close("all")
         self.pause = True
         self.closeReadThread = True
         self.readThread.join()

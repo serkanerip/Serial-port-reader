@@ -7,7 +7,7 @@ class SerialController:
         try:
             self.serial = serial.Serial(port=self.port, baudrate=9600, bytesize=serial.EIGHTBITS)
             self.Close()
-            self.serial.open()
+            self.Open()
         except IOError, e:
             self.anyError = True
             self.error = str(e)
@@ -39,6 +39,8 @@ class SerialController:
         return self.serial.isOpen()
     def Close(self):
         self.serial.close()
+    def Open(self):
+        self.serial.open()
 
 
 
