@@ -20,12 +20,16 @@ class SerialController:
                 self.anyError = True
                 self.error = "[Hata]: Bozuk veri!"
                 return {}
-            volt, time = unPackedData.split(',')
-            volt = float(volt)
+            resistance, time = unPackedData.split(',')
+            if not resistance.replace('.', '', 1).isdigit() or not time.replace('.', '', 1):
+                self.anyError = True
+                self.error = "[Hata]: Bozuk veri!"
+                return {}
+            resistance = float(resistance)
             time = float(time)
             self.anyError = False
             self.error = ""
-            return { 'resistance': volt, 'time': time }
+            return { 'resistance': resistance, 'time': time }
         except serial.SerialException, e:
             self.anyError = True
             self.error = "[Hata]: Baglanti hatasi!"
