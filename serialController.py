@@ -25,7 +25,7 @@ class SerialController:
             time = float(time)
             self.anyError = False
             self.error = ""
-            return { 'volt': volt, 'time': time }
+            return { 'resistance': volt, 'time': time }
         except serial.SerialException, e:
             self.anyError = True
             self.error = "[Hata]: Baglanti hatasi!"

@@ -53,7 +53,7 @@ class GraphicController:
                 if not self.sc.anyError:
                     self.allData.append(obj)
                     self.x.append(obj['time'])
-                    self.y.append(obj['volt'])
+                    self.y.append(obj['resistance'])
                     self.pause = False
                 else:
                     self.closeReadThread = True

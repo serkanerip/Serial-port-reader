@@ -8,7 +8,7 @@ def readAndVisualize(filename):
     y = []
     for row in data:
         x.append(row['time'])
-        y.append(row['volt'])
+        y.append(row['resistance'])
     plt.figure(1)
     plt.subplot(311)
     plt.plot(x, y, "r--")

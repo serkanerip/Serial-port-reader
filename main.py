@@ -62,21 +62,36 @@ while(not stop):
             readAndVisualize(_fileN)
     elif stdinput == "3":
         _fileN = raw_input("[*] Dosyanin adini giriniz: ")
-        data = json.load(open(_fileN))
-        _stopLoop = False
-        while (not _stopLoop):
-            _aralik = raw_input(" Araligi giriniz (sayi-sayi cinsinden): \n")
-            if _aralik.isdigit():
-                if int(_aralik) == 99:
-                    _stopLoop = True
-                    break
-            n1 = float(_aralik[:_aralik.find("-")])
-            n2 = float(_aralik[_aralik.find("-")+1:len(_aralik)])
-            _sum = 0
-            _number = 0
-            for row in data:
-                if float(row["time"]) >= n1 and n2 >= float(row["time"]):
-                    _sum += row["volt"]
-                    _number += 1
-            print "Ortalama: " + str((_sum/_number))
+        if not os.path.exists(_fileN):
+            print "[Hata] Dosya bulunamadi!"
+        else:
+            data = json.load(open(_fileN))
+            _stopLoop = False
+            while (not _stopLoop):
+                _aralik = raw_input("[+] Araligi giriniz (sayi-sayi cinsinden): \n")
+                if _aralik.isdigit():
+                    if int(_aralik) == 99:
+                        _stopLoop = True
+                        break
+                indexOfDash = _aralik.find("-")
+                if _aralik.count('-') != 1 or len(_aralik) == 0 or len(_aralik[:indexOfDash]) == 0 or indexOfDash+1 == len(_aralik):
+                    print "first check"
+                    continue
+                n1 = (_aralik[:_aralik.find("-")])
+                n2 = (_aralik[_aralik.find("-")+1:len(_aralik)])
+                if not n1.replace('.', '', 1).isdigit() or not n2.replace('.', '', 1).isdigit():
+                    print "not digit"
+                    continue
+                n1 = float(n1)
+                n2 = float(n2)
+                _sum = 0
+                _number = 0
+                for row in data:
+                    if float(row["time"]) >= n1 and n2 >= float(row["time"]):
+                        _sum += row["resistance"]
+                        _number += 1
+                if _number == 0:
+                    print "[*] Bu aralikta deger bulunamadi!"
+                else:
+                    print "[+] Ortalama= " + str((_sum/_number))
 
